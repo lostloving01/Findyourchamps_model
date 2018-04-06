@@ -13,7 +13,8 @@ def get_static_champion_data(api_key):
         s = shelve.open('Static_Champion_Data', writeback=True)
         try:
             for key in data['data']:
-                s[key] = data['data'][key]
+                ID = data['data'][key]['id']
+                s[str(ID)] = data['data'][key]
         finally:
             s.close()
         return 200

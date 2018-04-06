@@ -1,6 +1,8 @@
 <component name="ProjectDictionaryState">
   <dictionary name="stanley">
     <words>
+      <w>gameid</w>
+      <w>gameres</w>
       <w>matchid</w>
       <w>matchlist</w>
       <w>summonerid</w>
