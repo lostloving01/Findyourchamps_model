@@ -1,5 +1,6 @@
 import requests
 import shelve
+import time
 
 
 def get_static_champion_data(api_key):
@@ -17,9 +18,8 @@ def get_static_champion_data(api_key):
                 s[str(ID)] = data['data'][key]
         finally:
             s.close()
-        return 200
     else:
-        return response.status_code
+        print 'error occurs, status_code:', response.status_code
 
 
 def get_recent_match_list_by_account(api_key, account_id):
@@ -30,7 +30,9 @@ def get_recent_match_list_by_account(api_key, account_id):
     if response.status_code == 200:
         return response.json()
     else:
-        return response.status_code
+        print 'error occurs, status_code:', response.status_code, ', re-try after 5 sec'
+        time.sleep(5)
+        return get_recent_match_list_by_account(api_key, account_id)
 
 
 def get_match_list_by_account(api_key, account_id, queue=450, begin_index=0, season=11):
@@ -41,7 +43,9 @@ def get_match_list_by_account(api_key, account_id, queue=450, begin_index=0, sea
     if response.status_code == 200:
         return response.json()
     else:
-        return response.status_code
+        print 'error occurs, status_code:', response.status_code, ', re-try after 5 sec'
+        time.sleep(5)
+        return get_match_list_by_account(api_key, account_id, queue, begin_index, season)
 
 
 def get_match_by_matchid(api_key, match_id):
@@ -52,7 +56,9 @@ def get_match_by_matchid(api_key, match_id):
     if response.status_code == 200:
         return response.json()
     else:
-        return response.status_code
+        print 'error occurs, status_code:', response.status_code, ', re-try after 5 sec'
+        time.sleep(5)
+        return get_match_by_matchid(api_key, match_id)
 
 
 def get_summonerid_by_name(api_key, name):
@@ -63,5 +69,7 @@ def get_summonerid_by_name(api_key, name):
     if response.status_code == 200:
         return response.json()['accountId']
     else:
-        return response.status_code
+        print 'error occurs, status_code:', response.status_code, ', re-try after 5 sec'
+        time.sleep(5)
+        return get_match_by_matchid(api_key, name)
 
