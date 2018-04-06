@@ -35,10 +35,12 @@ def get_recent_match_list_by_account(api_key, account_id):
         return get_recent_match_list_by_account(api_key, account_id)
 
 
-def get_match_list_by_account(api_key, account_id, queue=450, begin_index=0, season=11):
+def get_match_list_by_account(api_key, account_id, queue=450, begin_index=0, season=11, end_index=0):
     url = "https://na1.api.riotgames.com/lol/match/v3/matchlists/by-account/"
     url += str(account_id)
     para = {"queue": queue, "api_key": api_key, "beginIndex": begin_index, "season": season}
+    if end_index!=0:
+        para["endIndex"]=end_index
     response = requests.get(url, params=para)
     if response.status_code == 200:
         return response.json()
